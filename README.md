@@ -17,7 +17,8 @@ Key Learnings & Considerations
 
 - Final Verification with AI Models  
   We experimented with Ollama’s `qwen2.5-VL` vision-language model as a final verification step, it consistently gave accurate results, making it an excellent last-stage validator. By providing the query and candidate image and prompting with:  
-  > “You are a compare-picture-assistant-robot. Your only purpose is to say ‘yes’ if the two pictures are the same and ‘no’ if they aren’t. Nothing else but ‘yes’ and ‘no’ is wanted.”
+  > “"Are these two images the same photo (allowing for rotation, crop, and compression)? "
+  > "Reply strictly with 'yes' or 'no'."”
 
 - Accuracy in Current Version (v2)  
   The current implementation achieves around 40–60% correct matches. The next logical step is to integrate AI verification systematically so we can collect ground-truth data. This would allow us to analyze and optimize the ideal candidate pool size (`x`) per stage. For example, analysis may show that the first algorithm should keep ~50 candidates for optimal downstream performance.  
