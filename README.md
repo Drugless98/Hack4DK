@@ -16,9 +16,8 @@ Key Learnings & Considerations
   The very first step must select a sufficiently large candidate pool. In our experiments, choosing only 10 candidates often excluded the true match, making recovery impossible in later stages. Increasing this pool size (e.g., 30–50) significantly improves recall. Alternatively, a stronger initial algorithm could reduce the need for a large candidate pool.  
 
 - Final Verification with AI Models  
-  We experimented with Ollama’s `qwen2.5-VL` vision-language model as a final verification step. By providing the query and candidate image and prompting with:  
-  > “You are a compare-picture-assistant-robot. Your only purpose is to say ‘yes’ if the two pictures are the same and ‘no’ if they aren’t. Nothing else but ‘yes’ and ‘no’ is wanted.”  
-  The model consistently gave accurate results, making it an excellent last-stage validator.  
+  We experimented with Ollama’s `qwen2.5-VL` vision-language model as a final verification step, it consistently gave accurate results, making it an excellent last-stage validator. By providing the query and candidate image and prompting with:  
+  > “You are a compare-picture-assistant-robot. Your only purpose is to say ‘yes’ if the two pictures are the same and ‘no’ if they aren’t. Nothing else but ‘yes’ and ‘no’ is wanted.”
 
 - Accuracy in Current Version (v2)  
   The current implementation achieves around 40–60% correct matches. The next logical step is to integrate AI verification systematically so we can collect ground-truth data. This would allow us to analyze and optimize the ideal candidate pool size (`x`) per stage. For example, analysis may show that the first algorithm should keep ~50 candidates for optimal downstream performance.  
