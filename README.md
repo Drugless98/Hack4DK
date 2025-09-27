@@ -29,7 +29,7 @@ It uses a **multi-step funnel approach**: fast methods first, deeper checks late
 ├── pipeline.py       # main script
 ├── result.tsv        # output results (after running)
 └── README.md         # this file
-
+```
 ## Dependencies 
 pip install pillow imagehash opencv-python-headless numpy torch open-clip-torch
 
