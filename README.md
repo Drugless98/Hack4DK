@@ -2,7 +2,29 @@
 Code from hack4DK 2025 - Sorry i didn't clean the code, i just focused on getting something that worked. 
 Final file is Tab seperated as some filenames might contain "," or ";"
 
+The pipeline is designed around a progressive narrowing strategy:  
+1. Start with a lightweight algorithm to quickly select a subset of candidate images (instead of comparing against all ~40k).  
+2. Pass those candidates into the next, more expensive algorithm, reducing the pool step by step.  
+3. Iterate through multiple algorithms from lightest to heaviest until only one or two candidates remain.  
 
+This approach balances performance and accuracy, ensuring heavier algorithms only run on a manageable subset of images.  
+
+---
+Key Learnings & Considerations  
+
+- Candidate Pool Size Matters  
+  The very first step must select a sufficiently large candidate pool. In our experiments, choosing only 10 candidates often excluded the true match, making recovery impossible in later stages. Increasing this pool size (e.g., 30–50) significantly improves recall. Alternatively, a stronger initial algorithm could reduce the need for a large candidate pool.  
+
+- Final Verification with AI Models  
+  We experimented with Ollama’s `qwen2.5-VL` vision-language model as a final verification step. By providing the query and candidate image and prompting with:  
+  > “You are a compare-picture-assistant-robot. Your only purpose is to say ‘yes’ if the two pictures are the same and ‘no’ if they aren’t. Nothing else but ‘yes’ and ‘no’ is wanted.”  
+  The model consistently gave accurate results, making it an excellent last-stage validator.  
+
+- Accuracy in Current Version (v2)  
+  The current implementation achieves around 40–60% correct matches. The next logical step is to integrate AI verification systematically so we can collect ground-truth data. This would allow us to analyze and optimize the ideal candidate pool size (`x`) per stage. For example, analysis may show that the first algorithm should keep ~50 candidates for optimal downstream performance.  
+
+
+--: BELOW IS AI GENERATED :--
 # 🔍 Image Matching Pipeline
 
 This project finds the **best matching image** in a large library (e.g. 40,000+ pictures) for every query image in another folder.  
